@@ -30,6 +30,7 @@ public class LoginController {
 
 	@Autowired
 	private UserService userService;
+	
 	SessionFactory sessionFactory;
 	
 	

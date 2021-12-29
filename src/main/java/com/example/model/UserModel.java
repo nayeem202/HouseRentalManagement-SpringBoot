@@ -23,9 +23,6 @@ public class UserModel {
 	private String email;
 	private String password;
 
-	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private List<AdvertisingForm> newAdd;
-
 	public UserModel(long id, String name, String username, String email, String password,
 			List<AdvertisingForm> newAdd) {
 		 
@@ -34,20 +31,13 @@ public class UserModel {
 		this.username = username;
 		this.email = email;
 		this.password = password;
-		this.newAdd = newAdd;
 	}
 
 	public UserModel() {
 		super();
 	}
 
-	public List<AdvertisingForm> getNewAdd() {
-		return newAdd;
-	}
-
-	public void setNewAdd(List<AdvertisingForm> newAdd) {
-		this.newAdd = newAdd;
-	}
+	
 
 	public long getId() {
 		return id;

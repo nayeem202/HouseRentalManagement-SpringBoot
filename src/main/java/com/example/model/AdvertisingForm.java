@@ -9,6 +9,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import org.springframework.web.multipart.MultipartFile;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 
@@ -20,6 +25,10 @@ public class AdvertisingForm {
 	 @GeneratedValue(strategy = GenerationType.AUTO)
 	 @Column(unique = true, length=20)
 	 private long advertisingId;
+	 
+	 @Transient
+	 @JsonIgnore
+	 MultipartFile file;
 	
 	 
 	 private String location;
@@ -31,10 +40,16 @@ public class AdvertisingForm {
 	 private int sqft;
 	 private String additionalinformation;
 	 private String images;
+	 private String imagesUri;
 	 
 	 @ManyToOne(fetch = FetchType.LAZY, optional = false)
 	    @JoinColumn(name = "adminid", nullable = false)
 	 private UserModel user;
+	 
+	 
+
+	public AdvertisingForm() {
+	}
 
 	public AdvertisingForm(Long advertisingId, String location, String type, String status, int bedrooms, int bathrooms,
 			int price, int sqft, String additionalinformation, String images, UserModel user) {
@@ -138,6 +153,26 @@ public class AdvertisingForm {
 
 	public void setUser(UserModel user) {
 		this.user = user;
+	}
+
+	public MultipartFile getFile() {
+		return file;
+	}
+
+	public void setFile(MultipartFile file) {
+		this.file = file;
+	}
+
+	public void setAdvertisingId(long advertisingId) {
+		this.advertisingId = advertisingId;
+	}
+
+	public String getImagesUri() {
+		return imagesUri;
+	}
+
+	public void setImagesUri(String imagesUri) {
+		this.imagesUri = imagesUri;
 	}
 	 
 	 
