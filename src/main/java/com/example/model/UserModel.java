@@ -32,6 +32,22 @@ public class UserModel {
 		this.email = email;
 		this.password = password;
 	}
+	
+	
+/*
+	 private AdvertisingForm advertisingForm;
+
+	 public AdvertisingForm getAdvertisingForm() {
+			return advertisingForm;
+		}
+
+
+
+		public void setAdvertisingForm(AdvertisingForm advertisingForm) {
+			this.advertisingForm = advertisingForm;
+		}
+
+*/
 
 	public UserModel() {
 		super();

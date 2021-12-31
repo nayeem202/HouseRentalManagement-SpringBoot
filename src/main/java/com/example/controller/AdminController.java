@@ -29,6 +29,7 @@ import com.example.storage.controller.FileController;
 import com.example.storage.payload.UploadFileResponse;
 import com.example.storage.service.FileStorageService;
 
+
 @RestController
 @CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
 
@@ -79,19 +80,33 @@ public class AdminController {
 		}
 		
 	}
+	
+	
+	
 
 	@GetMapping("/getAddvertising")
 	private List<AdvertisingForm> findAll() {
-		return (List<AdvertisingForm>) (advertiseService).findAll();
-
+		
+		List<AdvertisingForm> model =  (List<AdvertisingForm>) (advertiseService).findAll();
+		return model;
 	}
+	
+	
 
 	@GetMapping("/getAddvertising/{id}")
 	private AdvertisingForm findById(@PathVariable int id) {
 
 		return advertiseService.findById((long) id).get();
 	}
+	
 
+	
+	
+	
+	
+	
+	
+	
 	@PutMapping("/updateadvertising/{id}")
 	private AdvertisingForm advertisingFormU(@PathVariable long advertisingId,
 			@RequestBody AdvertisingForm advertisingForm) {

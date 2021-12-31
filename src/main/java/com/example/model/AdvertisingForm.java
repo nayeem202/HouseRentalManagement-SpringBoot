@@ -42,7 +42,7 @@ public class AdvertisingForm {
 	 private String images;
 	 private String imagesUri;
 	 
-	 @ManyToOne(fetch = FetchType.LAZY, optional = false)
+	 @ManyToOne( optional = false)
 	    @JoinColumn(name = "adminid", nullable = false)
 	 private UserModel user;
 	 
@@ -51,21 +51,7 @@ public class AdvertisingForm {
 	public AdvertisingForm() {
 	}
 
-	public AdvertisingForm(Long advertisingId, String location, String type, String status, int bedrooms, int bathrooms,
-			int price, int sqft, String additionalinformation, String images, UserModel user) {
-		super();
-		this.advertisingId = advertisingId;
-		this.location = location;
-		this.type = type;
-		this.status = status;
-		this.bedrooms = bedrooms;
-		this.bathrooms = bathrooms;
-		this.price = price;
-		this.sqft = sqft;
-		this.additionalinformation = additionalinformation;
-		this.images = images;
-		this.user = user;
-	}
+
 
 	public Long getAdvertisingId() {
 		return advertisingId;

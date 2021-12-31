@@ -19,8 +19,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-
+import com.example.model.AdvertisingForm;
 import com.example.model.UserModel;
+import com.example.repository.AdvertisingService;
 import com.example.repository.UserService;
 
 @RestController
@@ -31,13 +32,32 @@ public class LoginController {
 	@Autowired
 	private UserService userService;
 	
-	SessionFactory sessionFactory;
+
+	@Autowired
+	private AdvertisingService advertiseService;
+	
 	
 	
 	@GetMapping("/")
 	public String index() {
 		return "Hello World";
 	}
+	
+	
+	/*
+	@GetMapping("/getUser/{id}")
+	public ResponseEntity<Map> showAdvertise(@RequestBody UserModel userModel, @PathVariable int id){
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		AdvertisingForm advertisingForm = advertiseService.findById((long) id).get();
+		userModel.setAdvertisingForm(advertisingForm);
+		UserModel user = userService.save(userModel);
+		map.put("data", user);
+		return ResponseEntity.ok(map);
+		
+	}
+	*/
+	
 	
 	
 	
