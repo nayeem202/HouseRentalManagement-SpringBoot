@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 
-import org.hibernate.SessionFactory;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -19,9 +19,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.model.AdvertisingForm;
+
 import com.example.model.UserModel;
-import com.example.repository.AdvertisingService;
 import com.example.repository.UserService;
 
 @RestController
@@ -33,8 +32,7 @@ public class LoginController {
 	private UserService userService;
 	
 
-	@Autowired
-	private AdvertisingService advertiseService;
+	
 	
 	
 	

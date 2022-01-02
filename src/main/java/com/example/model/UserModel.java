@@ -2,14 +2,10 @@ package com.example.model;
 
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -34,20 +30,7 @@ public class UserModel {
 	}
 	
 	
-/*
-	 private AdvertisingForm advertisingForm;
 
-	 public AdvertisingForm getAdvertisingForm() {
-			return advertisingForm;
-		}
-
-
-
-		public void setAdvertisingForm(AdvertisingForm advertisingForm) {
-			this.advertisingForm = advertisingForm;
-		}
-
-*/
 
 	public UserModel() {
 		super();

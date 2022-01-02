@@ -92,11 +92,23 @@ public class AdminController {
 	}
 	
 	
-
+	
 	@GetMapping("/getAddvertising/{id}")
 	private AdvertisingForm findById(@PathVariable int id) {
 
 		return advertiseService.findById((long) id).get();
+	}
+	
+	
+	
+	
+	
+	//advertising by User
+
+	@GetMapping("/getAddvertisingOfUser/{id}")
+	private List<AdvertisingForm> findByUserId(@PathVariable int id) {
+
+		return advertiseService.findByUserId((long) id);
 	}
 	
 
