@@ -29,7 +29,6 @@ import com.example.storage.controller.FileController;
 import com.example.storage.payload.UploadFileResponse;
 import com.example.storage.service.FileStorageService;
 
-
 @RestController
 @CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
 
@@ -39,7 +38,7 @@ public class AdminController {
 
 	@Autowired
 	private FileStorageService fileStorageService;
-	
+
 	@Autowired
 	private UserService userService;
 
@@ -53,18 +52,17 @@ public class AdminController {
 
 	@PostMapping("/saveadvertising_withfile")
 	public ResponseEntity<Map> saveFormData(@ModelAttribute AdvertisingForm advertisingForm,
-			@RequestParam("file") MultipartFile file,
-			@RequestParam("user_id") long userId) {
+			@RequestParam("file") MultipartFile file, @RequestParam("user_id") long userId) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		try {
-			
+
 			String fileName = fileStorageService.storeFile(file);
 
 			String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/downloadFile/")
 					.path(fileName).toUriString();
 			advertisingForm.setImages(fileName);
 			advertisingForm.setImagesUri(fileDownloadUri);
-			
+
 			UserModel user = userService.findById(userId).get();
 			advertisingForm.setUser(user);
 			advertisingForm = advertiseService.save(advertisingForm);
@@ -78,48 +76,31 @@ public class AdminController {
 			map.put("message", e.getLocalizedMessage());
 			return ResponseEntity.status(500).body(map);
 		}
-		
+
 	}
-	
-	
-	
 
 	@GetMapping("/getAddvertising")
 	private List<AdvertisingForm> findAll() {
-		
-		List<AdvertisingForm> model =  (List<AdvertisingForm>) (advertiseService).findAll();
+
+		List<AdvertisingForm> model = (List<AdvertisingForm>) (advertiseService).findAll();
 		return model;
 	}
-	
-	
-	
+
 	@GetMapping("/getAddvertising/{id}")
 	private AdvertisingForm findById(@PathVariable int id) {
 
 		return advertiseService.findById((long) id).get();
 	}
-	
-	
-	
-	
-	
-	//advertising by User
 
+	// Show advertising by User
 	@GetMapping("/getAddvertisingOfUser/{id}")
 	private List<AdvertisingForm> findByUserId(@PathVariable int id) {
 
 		return advertiseService.findByUserId((long) id);
 	}
-	
 
 	
-	
-	
-	
-	
-	
-	
-	@PutMapping("/updateadvertising/{id}")
+	@PutMapping("/updateadvertising/{advertisingId}")
 	private AdvertisingForm advertisingFormU(@PathVariable long advertisingId,
 			@RequestBody AdvertisingForm advertisingForm) {
 		advertisingForm.setAdvertisingId(advertisingId);
