@@ -78,7 +78,48 @@ public class AdminController {
 		}
 
 	}
+	
+	
+	
+	
+	@PostMapping("/updateadvertising")
+	public ResponseEntity<Map> saveFormData1(@ModelAttribute AdvertisingForm advertisingForm,
+			@RequestParam("file") MultipartFile file, @RequestParam("user_id") long userId) {
+		
+		System.out.println(advertisingForm.getAdvertisingId());
 
+		System.out.println(userId);
+		
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		try {
+			
+			String fileName = fileStorageService.storeFile(file);
+
+			String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/downloadFile/")
+					.path(fileName).toUriString();
+			advertisingForm.setImages(fileName);
+			advertisingForm.setImagesUri(fileDownloadUri);
+
+			UserModel user = userService.findById(userId).get();
+			advertisingForm.setUser(user);
+			advertisingForm = advertiseService.save(advertisingForm);
+			map.put("status", "Success");
+			map.put("data", advertisingForm);
+			map.put("message", "Data saved successfully");
+			return ResponseEntity.ok(map);
+		} catch (Exception e) {
+			map.put("status", "failed");
+			map.put("data", null);
+			map.put("message", e.getLocalizedMessage());
+			return ResponseEntity.status(500).body(map);
+		}
+
+	}
+
+	
+	
+	
 	
 	/*
 	 
@@ -132,13 +173,18 @@ public class AdminController {
 		return advertiseService.findByUserId((long) id);
 	}
 
-	
-	@PutMapping("/updateadvertising/{advertisingId}")
-	private AdvertisingForm advertisingFormU(@PathVariable long advertisingId,
+	/*
+	@PostMapping("/updateadvertising/{advertisingId}")
+	private AdvertisingForm advertisingFormU(@PathVariable long advertisingId, 
 			@RequestBody AdvertisingForm advertisingForm) {
 		advertisingForm.setAdvertisingId(advertisingId);
-		return advertiseService.save(advertisingForm);
+		AdvertisingForm add=  advertiseService.save(advertisingForm);
+		System.out.println(add);
+		return add;
+		
 	}
+	*/
+	
 
 	@DeleteMapping("/deleteAdvertising/{id}")
 	private void delete(@PathVariable int id) {
