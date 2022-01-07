@@ -43,7 +43,7 @@ public class AdvertisingForm {
 	 private String imagesUri;
 	 
 	 @ManyToOne( optional = false)
-	    @JoinColumn(name = "adminid", nullable = false)
+	    @JoinColumn(name = "adminid", nullable = true)
 	 private UserModel user;
 	 
 	 

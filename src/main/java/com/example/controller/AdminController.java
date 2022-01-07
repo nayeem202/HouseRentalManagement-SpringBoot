@@ -79,6 +79,39 @@ public class AdminController {
 
 	}
 
+	
+	/*
+	 
+	  	@GetMapping("/getAddvertising")
+	public ResponseEntity<Map> getAdvertising(){
+		Map<String, Object> map = new HashMap<String, Object>();
+		try {
+			
+			List<AdvertisingForm> model = (List<AdvertisingForm>) (advertiseService).findAll();
+			map.put("status", "Success");
+			map.put("data", model);
+			map.put("message", "Data get successfully");
+			return ResponseEntity.ok(map);
+		} catch (Exception e) {
+			map.put("status", "failed");
+			map.put("data", null);
+			map.put("message", e.getLocalizedMessage());
+			return ResponseEntity.status(500).body(map);
+		}
+		
+	}
+	  
+	  
+	  
+	 *//////////////////////////////////////////////////
+	
+	
+	
+	
+	
+	
+	
+	
 	@GetMapping("/getAddvertising")
 	private List<AdvertisingForm> findAll() {
 
