@@ -190,5 +190,19 @@ public class AdminController {
 	private void delete(@PathVariable int id) {
 		advertiseService.deleteById((long) id);
 	}
+	
+	
+	
+	
+	@GetMapping("/getAddvertisingByType/{type}")
+	private List<AdvertisingForm> findAll(@PathVariable String type) {
+		List<AdvertisingForm> advertisingtype = (List<AdvertisingForm>) (advertiseService).categorytype((String) type );
+		return advertisingtype;
+	}
+	
 
 }
+
+
+
+
