@@ -161,29 +161,6 @@ public class AdvertisingForm {
 		this.imagesUri = imagesUri;
 	}
 
-
-
-	@Override
-	public String toString() {
-		return "AdvertisingForm [advertisingId=" + advertisingId + ", file=" + file + ", location=" + location
-				+ ", type=" + type + ", status=" + status + ", bedrooms=" + bedrooms + ", bathrooms=" + bathrooms
-				+ ", price=" + price + ", sqft=" + sqft + ", additionalinformation=" + additionalinformation
-				+ ", images=" + images + ", imagesUri=" + imagesUri + ", user=" + user + ", getAdvertisingId()="
-				+ getAdvertisingId() + ", getLocation()=" + getLocation() + ", getType()=" + getType()
-				+ ", getStatus()=" + getStatus() + ", getBedrooms()=" + getBedrooms() + ", getBathrooms()="
-				+ getBathrooms() + ", getPrice()=" + getPrice() + ", getSqft()=" + getSqft()
-				+ ", getAdditionalinformation()=" + getAdditionalinformation() + ", getImages()=" + getImages()
-				+ ", getUser()=" + getUser() + ", getFile()=" + getFile() + ", getImagesUri()=" + getImagesUri()
-				+ ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + ", toString()=" + super.toString()
-				+ "]";
-	}
-	 
-	 
-	
-	 
-	 
-	
-	 
 	 
 	
 }
