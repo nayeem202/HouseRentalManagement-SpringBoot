@@ -78,22 +78,18 @@ public class AdminController {
 		}
 
 	}
-	
-	
-	
-	
+
 	@PostMapping("/updateadvertising")
 	public ResponseEntity<Map> saveFormData1(@ModelAttribute AdvertisingForm advertisingForm,
 			@RequestParam("file") MultipartFile file, @RequestParam("user_id") long userId) {
-		
+
 		System.out.println(advertisingForm.getAdvertisingId());
 
 		System.out.println(userId);
-		
-		
+
 		Map<String, Object> map = new HashMap<String, Object>();
 		try {
-			
+
 			String fileName = fileStorageService.storeFile(file);
 
 			String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/downloadFile/")
@@ -117,42 +113,24 @@ public class AdminController {
 
 	}
 
-	
-	
-	
-	
 	/*
-	 
-	  	@GetMapping("/getAddvertising")
-	public ResponseEntity<Map> getAdvertising(){
-		Map<String, Object> map = new HashMap<String, Object>();
-		try {
-			
-			List<AdvertisingForm> model = (List<AdvertisingForm>) (advertiseService).findAll();
-			map.put("status", "Success");
-			map.put("data", model);
-			map.put("message", "Data get successfully");
-			return ResponseEntity.ok(map);
-		} catch (Exception e) {
-			map.put("status", "failed");
-			map.put("data", null);
-			map.put("message", e.getLocalizedMessage());
-			return ResponseEntity.status(500).body(map);
-		}
-		
-	}
-	  
-	  
-	  
+	 * 
+	 * @GetMapping("/getAddvertising") public ResponseEntity<Map> getAdvertising(){
+	 * Map<String, Object> map = new HashMap<String, Object>(); try {
+	 * 
+	 * List<AdvertisingForm> model = (List<AdvertisingForm>)
+	 * (advertiseService).findAll(); map.put("status", "Success"); map.put("data",
+	 * model); map.put("message", "Data get successfully"); return
+	 * ResponseEntity.ok(map); } catch (Exception e) { map.put("status", "failed");
+	 * map.put("data", null); map.put("message", e.getLocalizedMessage()); return
+	 * ResponseEntity.status(500).body(map); }
+	 * 
+	 * }
+	 * 
+	 * 
+	 * 
 	 *//////////////////////////////////////////////////
-	
-	
-	
-	
-	
-	
-	
-	
+
 	@GetMapping("/getAddvertising")
 	private List<AdvertisingForm> findAll() {
 
@@ -174,35 +152,34 @@ public class AdminController {
 	}
 
 	/*
-	@PostMapping("/updateadvertising/{advertisingId}")
-	private AdvertisingForm advertisingFormU(@PathVariable long advertisingId, 
-			@RequestBody AdvertisingForm advertisingForm) {
-		advertisingForm.setAdvertisingId(advertisingId);
-		AdvertisingForm add=  advertiseService.save(advertisingForm);
-		System.out.println(add);
-		return add;
-		
-	}
-	*/
-	
+	 * @PostMapping("/updateadvertising/{advertisingId}") private AdvertisingForm
+	 * advertisingFormU(@PathVariable long advertisingId,
+	 * 
+	 * @RequestBody AdvertisingForm advertisingForm) {
+	 * advertisingForm.setAdvertisingId(advertisingId); AdvertisingForm add=
+	 * advertiseService.save(advertisingForm); System.out.println(add); return add;
+	 * 
+	 * }
+	 */
 
 	@DeleteMapping("/deleteAdvertising/{id}")
 	private void delete(@PathVariable int id) {
 		advertiseService.deleteById((long) id);
 	}
-	
-	
-	
-	
+
+	// search advertising by type
 	@GetMapping("/getAddvertisingByType/{type}")
 	private List<AdvertisingForm> findAll(@PathVariable String type) {
-		List<AdvertisingForm> advertisingtype = (List<AdvertisingForm>) (advertiseService).categorytype((String) type );
+		List<AdvertisingForm> advertisingtype = (List<AdvertisingForm>) (advertiseService).categorytype((String) type);
 		return advertisingtype;
 	}
-	
+
+	// search advertising by SearchText
+	@GetMapping("/getAddvertisingBySearch/{searchText}")
+	private List<AdvertisingForm> findAllBySearching(@PathVariable String searchText) {
+		List<AdvertisingForm> advertisingSearching = (List<AdvertisingForm>) (advertiseService)
+				.searchAdvertise(searchText);
+		return advertisingSearching;
+	}
 
 }
-
-
-
-

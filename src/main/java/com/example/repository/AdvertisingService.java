@@ -3,8 +3,6 @@ package com.example.repository;
 
 
 import java.util.List;
-import java.util.Optional;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -26,6 +24,11 @@ public interface AdvertisingService extends CrudRepository<AdvertisingForm, Long
     public List<AdvertisingForm> categorytype(String type);
 	
 	
+	@Query("SELECT a from AdvertisingForm a where a.location like %:searchText% or "
+			+ "a.type like %:searchText% or a.status like %:searchText% or a.bedrooms like %:searchText% or   a.bathrooms like %:searchText% or "
+			+ " a.price like %:searchText% or a.sqft like %:searchText%")
+	public List<AdvertisingForm> searchAdvertise(String searchText);
+
 	
 	
 	
