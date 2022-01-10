@@ -161,6 +161,7 @@ public class AdminController {
 	 * 
 	 * }
 	 */
+	
 
 	@DeleteMapping("/deleteAdvertising/{id}")
 	private void delete(@PathVariable int id) {
