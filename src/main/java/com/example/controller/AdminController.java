@@ -113,74 +113,96 @@ public class AdminController {
 
 	}
 
-	/*
-	 * 
-	 * @GetMapping("/getAddvertising") public ResponseEntity<Map> getAdvertising(){
-	 * Map<String, Object> map = new HashMap<String, Object>(); try {
-	 * 
-	 * List<AdvertisingForm> model = (List<AdvertisingForm>)
-	 * (advertiseService).findAll(); map.put("status", "Success"); map.put("data",
-	 * model); map.put("message", "Data get successfully"); return
-	 * ResponseEntity.ok(map); } catch (Exception e) { map.put("status", "failed");
-	 * map.put("data", null); map.put("message", e.getLocalizedMessage()); return
-	 * ResponseEntity.status(500).body(map); }
-	 * 
-	 * }
-	 * 
-	 * 
-	 * 
-	 *//////////////////////////////////////////////////
-
+	
+	
+	
 	@GetMapping("/getAddvertising")
-	private List<AdvertisingForm> findAll() {
+	public ResponseEntity<?> getAdvertising() {
+		try {
+			List<AdvertisingForm> model = (List<AdvertisingForm>) (advertiseService).findAll();
+			return ResponseEntity.ok(model);
+		} catch (Exception e) {
+			return ResponseEntity.ok("getting data failed");
+		}
 
-		List<AdvertisingForm> model = (List<AdvertisingForm>) (advertiseService).findAll();
-		return model;
 	}
 
+	
+	// get Advertising details by advertisingId
 	@GetMapping("/getAddvertising/{id}")
-	private AdvertisingForm findById(@PathVariable int id) {
+	public ResponseEntity<?> getAdvertisingById(@PathVariable int id) {
+		try {
+			AdvertisingForm model =  (AdvertisingForm) (advertiseService).findById((long) id).get();
+			return ResponseEntity.ok(model);
+		} catch (Exception e) {
+			return ResponseEntity.ok("getting data failed");
+		}
 
-		return advertiseService.findById((long) id).get();
 	}
+
+	
 
 	// Show advertising by User
+	
 	@GetMapping("/getAddvertisingOfUser/{id}")
-	private List<AdvertisingForm> findByUserId(@PathVariable int id) {
+	public ResponseEntity<?> getAdvertisingByUserId(@PathVariable int id) {
+		try {
+			List<AdvertisingForm> model = (List<AdvertisingForm>) (advertiseService).findByUserId((long) id);
+			return ResponseEntity.ok(model);
+		} catch (Exception e) {
+			return ResponseEntity.ok("getting data failed");
+		}
 
-		return advertiseService.findByUserId((long) id);
 	}
+	
 
 	/*
-	 * @PostMapping("/updateadvertising/{advertisingId}") private AdvertisingForm
-	 * advertisingFormU(@PathVariable long advertisingId,
-	 * 
-	 * @RequestBody AdvertisingForm advertisingForm) {
-	 * advertisingForm.setAdvertisingId(advertisingId); AdvertisingForm add=
-	 * advertiseService.save(advertisingForm); System.out.println(add); return add;
-	 * 
-	 * }
-	 */
+	
+	@DeleteMapping("/deleteAdvertising/{id}")
+	public ResponseEntity<?> deleteAdvertisingByUserId(@PathVariable long id) {
+		try {
+			 advertiseService.deleteById((long) id);
+			return ResponseEntity.ok("successfully deleted");
+		} catch (Exception e) {
+			return ResponseEntity.ok("deleting data failed");
+		}
+
+	}
+	
+	*/
+	
 	
 
 	@DeleteMapping("/deleteAdvertising/{id}")
 	private void delete(@PathVariable int id) {
 		advertiseService.deleteById((long) id);
 	}
-
-	// search advertising by type
+	
+	
+	//Type wise search
+	
 	@GetMapping("/getAddvertisingByType/{type}")
-	private List<AdvertisingForm> findAll(@PathVariable String type) {
-		List<AdvertisingForm> advertisingtype = (List<AdvertisingForm>) (advertiseService).categorytype((String) type);
-		return advertisingtype;
-	}
+	public ResponseEntity<?> findAllByType(@PathVariable String type) {
+		try {
+			List<AdvertisingForm> advertisingtype =(List<AdvertisingForm>) (advertiseService).categorytype((String) type);
+			return ResponseEntity.ok(advertisingtype);
+		} catch (Exception e) {
+			return ResponseEntity.ok("getting typewise data failed");
+		}
 
+	}
+	
 	// search advertising by SearchText
 	@GetMapping("/getAddvertisingBySearch/{searchText}")
-	private List<AdvertisingForm> findAllBySearching(@PathVariable String searchText) {
-		List<AdvertisingForm> advertisingSearching = (List<AdvertisingForm>) (advertiseService)
-				.searchAdvertise(searchText);
-		return advertisingSearching;
+	public ResponseEntity<?> findAllBysearching(@PathVariable String searchText) {
+		try {
+			List<AdvertisingForm> advertisingSearching = (List<AdvertisingForm>) (advertiseService).searchAdvertise(searchText);
+			return ResponseEntity.ok(advertisingSearching);
+		} catch (Exception e) {
+			return ResponseEntity.ok("searching data failed");
+		}
+
 	}
+	
 
 }
