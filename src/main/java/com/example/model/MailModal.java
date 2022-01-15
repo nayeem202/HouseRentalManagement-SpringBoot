@@ -4,6 +4,7 @@ public class MailModal {
 	String to;
 	String subject;
 	String message;
+	
 	public String getTo() {
 		return to;
 	}
