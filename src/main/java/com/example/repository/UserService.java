@@ -9,9 +9,5 @@ import com.example.model.UserModel;
 
 @Repository
 public interface UserService extends CrudRepository<UserModel, Long> {
-
-	
-	
-	
-	
+		
 }
