@@ -17,6 +17,7 @@ public class UserModel {
 	private String name;
 	private String username;
 	private String email;
+	private String phone;
 	private String password;
 
 	public UserModel(long id, String name, String username, String email, String password,
@@ -27,6 +28,7 @@ public class UserModel {
 		this.username = username;
 		this.email = email;
 		this.password = password;
+		
 	}
 	
 	
@@ -77,5 +79,21 @@ public class UserModel {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
+
+
+
+	public String getPhone() {
+		return phone;
+	}
+
+
+
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+	
+	
 
 }
