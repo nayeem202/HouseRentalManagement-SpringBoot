@@ -41,21 +41,19 @@ public class LoginController {
 		return "Hello World";
 	}
 	
-	
 	/*
+	
 	@GetMapping("/getUser/{id}")
-	public ResponseEntity<Map> showAdvertise(@RequestBody UserModel userModel, @PathVariable int id){
-		Map<String, Object> map = new HashMap<String, Object>();
+	public ResponseEntity<Map> showCurrentUser(@RequestBody UserModel userModel, @PathVariable int id){
 		
-		AdvertisingForm advertisingForm = advertiseService.findById((long) id).get();
-		userModel.setAdvertisingForm(advertisingForm);
-		UserModel user = userService.save(userModel);
-		map.put("data", user);
-		return ResponseEntity.ok(map);
+		Map<String, Object> map = new HashMap<String, Object>();
+		UserService currentUser = (UserService) userService.findById((long) id).get();	
+		map.put("data", currentUser);
+		return (ResponseEntity<Map>) currentUser;
 		
 	}
-	*/
 	
+	*/
 	
 	
 	
@@ -97,6 +95,12 @@ public class LoginController {
 		
 	}
 	
+	
+	@GetMapping("/getUser/{id}")
+	public UserModel findUser( @PathVariable int id) {
+		UserModel user = (UserModel) userService.findById((long) id).get();	
+		return user;		
+	}
 	
 	
 	
