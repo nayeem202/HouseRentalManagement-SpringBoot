@@ -12,7 +12,7 @@ import com.example.model.AdvertisingForm;
 import com.example.model.UserModel;
 
 @Repository
-public interface AdvertisingService extends CrudRepository<AdvertisingForm, Long>, JpaRepository<AdvertisingForm, Long>{
+public interface AdvertisingService extends JpaRepository<AdvertisingForm, Long>{
 
 	
 	
@@ -26,15 +26,19 @@ public interface AdvertisingService extends CrudRepository<AdvertisingForm, Long
 	
 	@Query("SELECT a from AdvertisingForm a where a.location like %:searchText% or "
 			+ "a.type like %:searchText% or a.status like %:searchText% or"
-			+ " a.price like %:searchText%")
-	
-	
+			+ " a.price like %:searchText%")	
 	public List<AdvertisingForm> searchAdvertise(String searchText);
 
 	
 	
-	
+	/*
+	@Query("Select add from AdvertisingForm add where add.location = ?1 and add.type =?2" )
+	public List<AdvertisingForm> advancedsearchAdvertise(String advancedsearchText);
+*/
 
+
+	@Query("Select add from AdvertisingForm add where add.location = ?1 and add.price=?2" )
+	List<AdvertisingForm> findByIdSearchinggggggg(String location, int price);
 
 
 

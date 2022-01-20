@@ -205,4 +205,19 @@ public class AdminController {
 	}
 	
 
+	
+	//filtering
+		@GetMapping("/getAddvertisingbyLocation/{location}/{price}")
+		public ResponseEntity<?> getAdvertisingBySearching(@PathVariable String location, @PathVariable int price) {
+			try {
+				List<AdvertisingForm>  model =  (List<AdvertisingForm>) (advertiseService).findByIdSearchinggggggg(location,price);
+				return ResponseEntity.ok(model);
+			} catch (Exception e) {
+				return ResponseEntity.ok(e.getLocalizedMessage());
+			}
+
+		}
+
+	
+
 }

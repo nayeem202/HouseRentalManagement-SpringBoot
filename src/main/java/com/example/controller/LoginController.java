@@ -31,16 +31,6 @@ public class LoginController {
 	@Autowired
 	private UserService userService;
 	
-
-	
-	
-	
-	
-	@GetMapping("/")
-	public String index() {
-		return "Hello World";
-	}
-	
 	/*
 	
 	@GetMapping("/getUser/{id}")
@@ -54,7 +44,6 @@ public class LoginController {
 	}
 	
 	*/
-	
 	
 	
 	@PostMapping("/saveUser")
