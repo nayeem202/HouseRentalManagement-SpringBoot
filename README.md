@@ -19,4 +19,6 @@ First go to mysql workbench and select Data Import option and then select import
 
 then Defult Schema to be imported to option and Clcik new and create new schema named <b> hrms </b> and now click Start Import Button
 
+# Fronted: 
+https://github.com/nayeem202/HouseRentalManagement-Angular
 
