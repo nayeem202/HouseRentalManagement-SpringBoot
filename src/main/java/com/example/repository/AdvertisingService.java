@@ -31,15 +31,22 @@ public interface AdvertisingService extends JpaRepository<AdvertisingForm, Long>
 
 	
 	
-	/*
-	@Query("Select add from AdvertisingForm add where add.location = ?1 and add.type =?2" )
-	public List<AdvertisingForm> advancedsearchAdvertise(String advancedsearchText);
-*/
+	
 
+	@Query("Select add from AdvertisingForm add where add.location = ?1 and"
+			+ " (add.price BETWEEN ?2 AND ?3) and" 
+			+ " (add.sqft BETWEEN ?4 AND ?5) and"
+			+ " add.type =?6 and"
+			+ " add.status =?7 and"
+			+ " add.bedrooms =?8 and"
+			+ " add.bathrooms =?9")
+	List<AdvertisingForm> findByadvancedSearchinggggggg(String location, int price, int price2, int sqft, int sqft2, String type, 
+			String status, int bedrooms, int bathrooms);
 
-	@Query("Select add from AdvertisingForm add where add.location = ?1 and add.price=?2" )
-	List<AdvertisingForm> findByIdSearchinggggggg(String location, int price);
-
+	
+	
+	@Query("Select p from AdvertisingForm p where p.price between ?1 and ?2")
+	List<AdvertisingForm> findByadvancedSearching(int price, int price2);
 
 
 }

@@ -206,17 +206,31 @@ public class AdminController {
 	
 
 	
-	//filtering
-		@GetMapping("/getAddvertisingbyLocation/{location}/{price}")
-		public ResponseEntity<?> getAdvertisingBySearching(@PathVariable String location, @PathVariable int price) {
+		//filtering
+		@GetMapping("/getAdvancedSearching/{location}/{price}/{price2}/{sqft}/{sqft2}/{type}/{status}/{bedrooms}/{bathrooms}")
+		public ResponseEntity<?> getAdvertisingBySearching(@PathVariable String location, @PathVariable int price,  @PathVariable int price2, @PathVariable int sqft,@PathVariable int sqft2, @PathVariable String type, @PathVariable String status, @PathVariable int bedrooms, @PathVariable int bathrooms) {
 			try {
-				List<AdvertisingForm>  model =  (List<AdvertisingForm>) (advertiseService).findByIdSearchinggggggg(location,price);
+				List<AdvertisingForm>  model =  (List<AdvertisingForm>) (advertiseService).findByadvancedSearchinggggggg(location,price,price2, sqft, sqft2, type, status,bedrooms, bathrooms);
 				return ResponseEntity.ok(model);
 			} catch (Exception e) {
 				return ResponseEntity.ok(e.getLocalizedMessage());
 			}
 
 		}
+		
+		/*
+		@GetMapping("/getAdvancedSearching/{price}/{p}")
+		public ResponseEntity<?> getAdvertisingBySearch(@PathVariable int price, @PathVariable int p) {
+			try {
+				List<AdvertisingForm>  model =  (List<AdvertisingForm>) (advertiseService).findByadvancedSearching(price, p);
+				return ResponseEntity.ok(model);
+			} catch (Exception e) {
+				return ResponseEntity.ok(e.getLocalizedMessage());
+			}
+
+		}
+		*/
+
 
 	
 
