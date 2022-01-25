@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+
 import com.example.model.AdvertisingForm;
 import com.example.model.UserModel;
 
@@ -47,6 +48,9 @@ public interface AdvertisingService extends JpaRepository<AdvertisingForm, Long>
 	
 	@Query("Select p from AdvertisingForm p where p.price between ?1 and ?2")
 	List<AdvertisingForm> findByadvancedSearching(int price, int price2);
+
+
+
 
 
 }

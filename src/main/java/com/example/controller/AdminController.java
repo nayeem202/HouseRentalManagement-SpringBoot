@@ -1,8 +1,12 @@
 package com.example.controller;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,6 +32,7 @@ import com.example.repository.UserService;
 import com.example.storage.controller.FileController;
 import com.example.storage.payload.UploadFileResponse;
 import com.example.storage.service.FileStorageService;
+import com.fasterxml.jackson.databind.introspect.TypeResolutionContext.Empty;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
@@ -70,6 +75,7 @@ public class AdminController {
 			map.put("data", advertisingForm);
 			map.put("message", "Data saved successfully");
 			return ResponseEntity.ok(map);
+
 		} catch (Exception e) {
 			map.put("status", "failed");
 			map.put("data", null);
@@ -78,13 +84,71 @@ public class AdminController {
 		}
 
 	}
+	
+	
+	//Adding Multiple Image
+	@PostMapping("/saveadvertising_withMultipleFile")
+	public ResponseEntity<List> saveFormData2(@ModelAttribute AdvertisingForm advertisingForm,
+			@RequestParam("files") MultipartFile[] filess,   @RequestParam("user_id") long userId) {
+		List message = new ArrayList();
+		int count = 0;
+		try {
+
+			for (MultipartFile file : filess) {
+				
+				String fileName = fileStorageService.storeFile(file);
+				String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/downloadFile/")
+						.path(fileName).toUriString();
+
+			
+				
+				
+				if (count == 0) {
+					advertisingForm.setImg(file.getOriginalFilename());
+					advertisingForm.setImgUri(fileDownloadUri);
+				}
+
+				if (count == 1) {
+					advertisingForm.setImages(fileName);
+					advertisingForm.setImagesUri(fileDownloadUri);
+				}
+				
+				if (count == 2) {
+					advertisingForm.setImg3(fileName);
+					advertisingForm.setImgUri3(fileDownloadUri);
+				}
+				
+				
+				count++;
+				
+				advertisingForm.setVideoType(file.getContentType());
+				advertisingForm.setVideo(fileDownloadUri); 
+
+				UserModel user = userService.findById(userId).get();
+				advertisingForm.setUser(user);
+				advertiseService.save(advertisingForm);
+				message.add(advertisingForm);
+				message.add("Successfully! -> upload filename: " + file.getOriginalFilename());
+				message.add("Successfully! -> upload videoType: " + file.getContentType());
+				System.out.println(advertisingForm.getImg());
+			}
+		} catch (Exception e) {
+			message.add("failed");
+			message.add(null);
+			message.add(e.getLocalizedMessage());
+			return ResponseEntity.status(500).body(message);
+		}
+		return ResponseEntity.ok(message);
+	}
+	
+
+	// String fileName = fileStorageService.storeFile(files);
 
 	@PostMapping("/updateadvertising")
 	public ResponseEntity<Map> saveFormData1(@ModelAttribute AdvertisingForm advertisingForm,
 			@RequestParam("file") MultipartFile file, @RequestParam("user_id") long userId) {
 
 		System.out.println(advertisingForm.getAdvertisingId());
-
 		System.out.println(userId);
 
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -113,9 +177,6 @@ public class AdminController {
 
 	}
 
-	
-	
-	
 	@GetMapping("/getAddvertising")
 	public ResponseEntity<?> getAdvertising() {
 		try {
@@ -127,12 +188,11 @@ public class AdminController {
 
 	}
 
-	
 	// get Advertising details by advertisingId
 	@GetMapping("/getAddvertising/{id}")
 	public ResponseEntity<?> getAdvertisingById(@PathVariable int id) {
 		try {
-			AdvertisingForm model =  (AdvertisingForm) (advertiseService).findById((long) id).get();
+			AdvertisingForm model = (AdvertisingForm) (advertiseService).findById((long) id).get();
 			return ResponseEntity.ok(model);
 		} catch (Exception e) {
 			return ResponseEntity.ok("getting data failed");
@@ -140,10 +200,8 @@ public class AdminController {
 
 	}
 
-	
-
 	// Show advertising by User
-	
+
 	@GetMapping("/getAddvertisingOfUser/{id}")
 	public ResponseEntity<?> getAdvertisingByUserId(@PathVariable int id) {
 		try {
@@ -154,84 +212,75 @@ public class AdminController {
 		}
 
 	}
-	
 
 	/*
-	
-	@DeleteMapping("/deleteAdvertising/{id}")
-	public ResponseEntity<?> deleteAdvertisingByUserId(@PathVariable long id) {
-		try {
-			 advertiseService.deleteById((long) id);
-			return ResponseEntity.ok("successfully deleted");
-		} catch (Exception e) {
-			return ResponseEntity.ok("deleting data failed");
-		}
-
-	}
-	
-	*/
-	
-	
+	 * 
+	 * @DeleteMapping("/deleteAdvertising/{id}") public ResponseEntity<?>
+	 * deleteAdvertisingByUserId(@PathVariable long id) { try {
+	 * advertiseService.deleteById((long) id); return
+	 * ResponseEntity.ok("successfully deleted"); } catch (Exception e) { return
+	 * ResponseEntity.ok("deleting data failed"); }
+	 * 
+	 * }
+	 * 
+	 */
 
 	@DeleteMapping("/deleteAdvertising/{id}")
 	private void delete(@PathVariable int id) {
 		advertiseService.deleteById((long) id);
 	}
-	
-	
-	//Type wise search
-	
+
+	// Type wise search
+
 	@GetMapping("/getAddvertisingByType/{type}")
 	public ResponseEntity<?> findAllByType(@PathVariable String type) {
 		try {
-			List<AdvertisingForm> advertisingtype =(List<AdvertisingForm>) (advertiseService).categorytype((String) type);
+			List<AdvertisingForm> advertisingtype = (List<AdvertisingForm>) (advertiseService)
+					.categorytype((String) type);
 			return ResponseEntity.ok(advertisingtype);
 		} catch (Exception e) {
 			return ResponseEntity.ok("getting typewise data failed");
 		}
 
 	}
-	
+
 	// search advertising by SearchText
 	@GetMapping("/getAddvertisingBySearch/{searchText}")
 	public ResponseEntity<?> findAllBysearching(@PathVariable String searchText) {
 		try {
-			List<AdvertisingForm> advertisingSearching = (List<AdvertisingForm>) (advertiseService).searchAdvertise(searchText);
+			List<AdvertisingForm> advertisingSearching = (List<AdvertisingForm>) (advertiseService)
+					.searchAdvertise(searchText);
 			return ResponseEntity.ok(advertisingSearching);
 		} catch (Exception e) {
 			return ResponseEntity.ok("searching data failed");
 		}
 
 	}
-	
 
-	
-		//filtering
-		@GetMapping("/getAdvancedSearching/{location}/{price}/{price2}/{sqft}/{sqft2}/{type}/{status}/{bedrooms}/{bathrooms}")
-		public ResponseEntity<?> getAdvertisingBySearching(@PathVariable String location, @PathVariable int price,  @PathVariable int price2, @PathVariable int sqft,@PathVariable int sqft2, @PathVariable String type, @PathVariable String status, @PathVariable int bedrooms, @PathVariable int bathrooms) {
-			try {
-				List<AdvertisingForm>  model =  (List<AdvertisingForm>) (advertiseService).findByadvancedSearchinggggggg(location,price,price2, sqft, sqft2, type, status,bedrooms, bathrooms);
-				return ResponseEntity.ok(model);
-			} catch (Exception e) {
-				return ResponseEntity.ok(e.getLocalizedMessage());
-			}
-
+	// filtering
+	@GetMapping("/getAdvancedSearching/{location}/{price}/{price2}/{sqft}/{sqft2}/{type}/{status}/{bedrooms}/{bathrooms}")
+	public ResponseEntity<?> getAdvertisingBySearching(@PathVariable String location, @PathVariable int price,
+			@PathVariable int price2, @PathVariable int sqft, @PathVariable int sqft2, @PathVariable String type,
+			@PathVariable String status, @PathVariable int bedrooms, @PathVariable int bathrooms) {
+		try {
+			List<AdvertisingForm> model = (List<AdvertisingForm>) (advertiseService).findByadvancedSearchinggggggg(
+					location, price, price2, sqft, sqft2, type, status, bedrooms, bathrooms);
+			return ResponseEntity.ok(model);
+		} catch (Exception e) {
+			return ResponseEntity.ok(e.getLocalizedMessage());
 		}
-		
-		/*
-		@GetMapping("/getAdvancedSearching/{price}/{p}")
-		public ResponseEntity<?> getAdvertisingBySearch(@PathVariable int price, @PathVariable int p) {
-			try {
-				List<AdvertisingForm>  model =  (List<AdvertisingForm>) (advertiseService).findByadvancedSearching(price, p);
-				return ResponseEntity.ok(model);
-			} catch (Exception e) {
-				return ResponseEntity.ok(e.getLocalizedMessage());
-			}
 
-		}
-		*/
+	}
 
-
-	
+	/*
+	 * @GetMapping("/getAdvancedSearching/{price}/{p}") public ResponseEntity<?>
+	 * getAdvertisingBySearch(@PathVariable int price, @PathVariable int p) { try {
+	 * List<AdvertisingForm> model = (List<AdvertisingForm>)
+	 * (advertiseService).findByadvancedSearching(price, p); return
+	 * ResponseEntity.ok(model); } catch (Exception e) { return
+	 * ResponseEntity.ok(e.getLocalizedMessage()); }
+	 * 
+	 * }
+	 */
 
 }

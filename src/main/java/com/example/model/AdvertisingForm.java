@@ -15,43 +15,94 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-
-
 @Entity
 @Table(name = "advertisingform")
 public class AdvertisingForm {
+
+	@Id()
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(unique = true, length = 20)
+	private long advertisingId;
+
+	@Transient
+	@JsonIgnore
+	MultipartFile file;
+
+	private String location;
+	private String type;
+	private String status;
+	private int bedrooms;
+	private int bathrooms;
+	private int price;
+	private int sqft;
+	private String additionalinformation;
+	private String images;
+	private String imagesUri;
+
+	private String img2;
+	private String imgUri2;
+
+	private String img3;
+	private String imgUri3;
+
+	private String video;
+	private String videoType;
 	
-	 @Id()
-	 @GeneratedValue(strategy = GenerationType.AUTO)
-	 @Column(unique = true, length=20)
-	 private long advertisingId;
-	 
-	 @Transient
-	 @JsonIgnore
-	 MultipartFile file;
-	
-	 
-	 private String location;
-	 private String type;
-	 private String status;
-	 private int bedrooms;
-	 private int bathrooms;
-	 private int price;
-	 private int sqft;
-	 private String additionalinformation;
-	 private String images;
-	 private String imagesUri;
-	 
-	 @ManyToOne( optional = false)
-	    @JoinColumn(name = "adminid", nullable = true)
-	 private UserModel user;
-	 
-	 
+
+	@ManyToOne(optional = false)
+	@JoinColumn(name = "adminid", nullable = true)
+	private UserModel user;
+
+	public String getVideo() {
+		return video;
+	}
+
+	public void setVideo(String video) {
+		this.video = video;
+	}
+
+	public String getVideoType() {
+		return videoType;
+	}
+
+	public void setVideoType(String videoType) {
+		this.videoType = videoType;
+	}
+
+	public String getImg3() {
+		return img3;
+	}
+
+	public void setImg3(String img3) {
+		this.img3 = img3;
+	}
+
+	public String getImgUri3() {
+		return imgUri3;
+	}
+
+	public void setImgUri3(String imgUri3) {
+		this.imgUri3 = imgUri3;
+	}
+
+	public String getImg() {
+		return img2;
+	}
+
+	public void setImg(String fileName) {
+		this.img2 = fileName;
+	}
+
+	public String getImgUri() {
+		return imgUri2;
+	}
+
+	public void setImgUri(String fileDownloadUri) {
+		this.imgUri2 = fileDownloadUri;
+	}
 
 	public AdvertisingForm() {
 	}
-
-
 
 	public Long getAdvertisingId() {
 		return advertisingId;
@@ -161,6 +212,4 @@ public class AdvertisingForm {
 		this.imagesUri = imagesUri;
 	}
 
-	 
-	
 }
