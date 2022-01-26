@@ -100,17 +100,20 @@ public class AdminController {
 				String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/downloadFile/")
 						.path(fileName).toUriString();
 
-			
+				//advertisingForm.setVideoType(file.getContentType());
+				//advertisingForm.setVideo(fileDownloadUri); 
 				
 				
 				if (count == 0) {
-					advertisingForm.setImg(file.getOriginalFilename());
-					advertisingForm.setImgUri(fileDownloadUri);
+					
+					advertisingForm.setImages(fileName);
+					advertisingForm.setImagesUri(fileDownloadUri);
+					
 				}
 
 				if (count == 1) {
-					advertisingForm.setImages(fileName);
-					advertisingForm.setImagesUri(fileDownloadUri);
+					advertisingForm.setImg(file.getOriginalFilename());
+					advertisingForm.setImgUri(fileDownloadUri);
 				}
 				
 				if (count == 2) {
@@ -121,8 +124,7 @@ public class AdminController {
 				
 				count++;
 				
-				advertisingForm.setVideoType(file.getContentType());
-				advertisingForm.setVideo(fileDownloadUri); 
+		
 
 				UserModel user = userService.findById(userId).get();
 				advertisingForm.setUser(user);
