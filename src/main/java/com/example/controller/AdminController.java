@@ -84,47 +84,47 @@ public class AdminController {
 		}
 
 	}
-	
-	
-	//Adding Multiple Image
+
+	// Adding Multiple Image
 	@PostMapping("/saveadvertising_withMultipleFile")
 	public ResponseEntity<List> saveFormData2(@ModelAttribute AdvertisingForm advertisingForm,
-			@RequestParam("files") MultipartFile[] filess,   @RequestParam("user_id") long userId) {
+			@RequestParam("files") MultipartFile[] filess, @RequestParam("file") MultipartFile video, @RequestParam("user_id") long userId) {
+		
+		
+		
 		List message = new ArrayList();
 		int count = 0;
 		try {
-
+			
+			String fileNameV = fileStorageService.storeFile(video);
+			String fileDownloadUriV = ServletUriComponentsBuilder.fromCurrentContextPath().path("/downloadFile/")
+					.path(fileNameV).toUriString();
+			 advertisingForm.setVideoType(video.getContentType());
+			 advertisingForm.setVideo(fileDownloadUriV);
+			 
+			
 			for (MultipartFile file : filess) {
-				
+
 				String fileName = fileStorageService.storeFile(file);
 				String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/downloadFile/")
 						.path(fileName).toUriString();
-
-				//advertisingForm.setVideoType(file.getContentType());
-				//advertisingForm.setVideo(fileDownloadUri); 
-				
 				
 				if (count == 0) {
-					
 					advertisingForm.setImages(fileName);
 					advertisingForm.setImagesUri(fileDownloadUri);
-					
 				}
 
 				if (count == 1) {
 					advertisingForm.setImg(file.getOriginalFilename());
 					advertisingForm.setImgUri(fileDownloadUri);
 				}
-				
+
 				if (count == 2) {
 					advertisingForm.setImg3(fileName);
 					advertisingForm.setImgUri3(fileDownloadUri);
 				}
 				
-				
 				count++;
-				
-		
 
 				UserModel user = userService.findById(userId).get();
 				advertisingForm.setUser(user);
@@ -143,9 +143,9 @@ public class AdminController {
 		return ResponseEntity.ok(message);
 	}
 	
+	
 
-	// String fileName = fileStorageService.storeFile(files);
-
+	// updateAdvertising
 	@PostMapping("/updateadvertising")
 	public ResponseEntity<Map> saveFormData1(@ModelAttribute AdvertisingForm advertisingForm,
 			@RequestParam("file") MultipartFile file, @RequestParam("user_id") long userId) {
