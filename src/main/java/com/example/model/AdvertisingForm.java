@@ -48,10 +48,52 @@ public class AdvertisingForm {
 	private String video;
 	private String videoType;
 	
+	private double lat;
+	private double lng;
+	
 
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "adminid", nullable = true)
 	private UserModel user;
+	
+	
+	
+	
+	
+
+	public String getImg2() {
+		return img2;
+	}
+
+	public void setImg2(String img2) {
+		this.img2 = img2;
+	}
+
+	public String getImgUri2() {
+		return imgUri2;
+	}
+
+	public void setImgUri2(String imgUri2) {
+		this.imgUri2 = imgUri2;
+	}
+
+	
+	
+	public double getLat() {
+		return lat;
+	}
+
+	public void setLat(double lat) {
+		this.lat = lat;
+	}
+
+	public double getLng() {
+		return lng;
+	}
+
+	public void setLng(double lng) {
+		this.lng = lng;
+	}
 
 	public String getVideo() {
 		return video;

@@ -185,7 +185,7 @@ public class AdminController {
 			List<AdvertisingForm> model = (List<AdvertisingForm>) (advertiseService).findAll();
 			return ResponseEntity.ok(model);
 		} catch (Exception e) {
-			return ResponseEntity.ok("getting data failed");
+			return ResponseEntity.ok(e);
 		}
 
 	}
