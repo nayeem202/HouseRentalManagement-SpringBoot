@@ -15,7 +15,7 @@ import com.example.model.MailModal;
 import com.example.repository.EmailService;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
+@CrossOrigin(origins = "*", allowedHeaders = "*", maxAge = 3600)
 public class MailSendController {
 	@Autowired
 	private EmailService emailService;

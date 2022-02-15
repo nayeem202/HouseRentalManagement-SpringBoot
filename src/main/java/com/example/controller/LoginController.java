@@ -24,7 +24,7 @@ import com.example.model.UserModel;
 import com.example.repository.UserService;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
+@CrossOrigin(origins = "*", allowedHeaders = "*", maxAge = 3600)
 public class LoginController {
 	
 

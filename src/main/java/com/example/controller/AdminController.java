@@ -35,7 +35,7 @@ import com.example.storage.service.FileStorageService;
 import com.fasterxml.jackson.databind.introspect.TypeResolutionContext.Empty;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
+@CrossOrigin(origins = "*", allowedHeaders = "*", maxAge = 3600)
 
 public class AdminController {
 
