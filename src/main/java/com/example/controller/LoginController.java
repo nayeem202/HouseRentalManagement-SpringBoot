@@ -91,6 +91,11 @@ public class LoginController {
 		return user;		
 	}
 	
+	@GetMapping("/getUserInfo/{username}")
+	public UserModel findUserByUsername( @PathVariable String username) {
+		UserModel user = (UserModel) userService.findByUserName((String) username).get(0);	
+		return user;		
+	}
 	
 	
 	

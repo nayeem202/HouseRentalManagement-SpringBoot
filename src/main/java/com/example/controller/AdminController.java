@@ -65,11 +65,13 @@ public class AdminController {
 
 			String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/downloadFile/")
 					.path(fileName).toUriString();
+			
 			advertisingForm.setImages(fileName);
 			advertisingForm.setImagesUri(fileDownloadUri);
 
 			UserModel user = userService.findById(userId).get();
 			advertisingForm.setUser(user);
+			
 			advertisingForm = advertiseService.save(advertisingForm);
 			map.put("status", "Success");
 			map.put("data", advertisingForm);
@@ -258,6 +260,7 @@ public class AdminController {
 		}
 
 	}
+	
 
 	// filtering
 	@GetMapping("/getAdvancedSearching/{location}/{price}/{price2}/{sqft}/{sqft2}/{type}/{status}/{bedrooms}/{bathrooms}")
